@@ -123,7 +123,7 @@ fix: fix a bug
 ## **你必须知道**
 1. **不要**提交任何敏感信息，例如`api_key`、`address`或`password`。
 2. 您可以使用配置文件`config.yaml`来存储某些敏感信息，但不要试图提交它。每次修改`config.yaml`的结构后，您必须同步更新`config.yaml.template`。
-3. 任何时候不要用 `git push --force` 除非你知道你在干什么 翻译
+3. 任何时候不要用 `git push --force` 除非你知道你在干什么。
 
 ## 待办事项
 - [ ] 登录和注册模块
