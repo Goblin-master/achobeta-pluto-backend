@@ -12,7 +12,6 @@ AchoBeta Pluto System - 2024 Group G - Backend - Re-examination Project
 ```
 
 
-
 ## Project Functionality
 Team Management System
 
