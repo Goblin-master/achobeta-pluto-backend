@@ -2,17 +2,15 @@ package initalize
 
 import (
 	"tgwp/configs"
-	"tgwp/db/databases"
-	"tgwp/db/myRedis"
 	"tgwp/global"
-	"tgwp/internal/pkg/mysqlx"
+	myRedis "tgwp/internal/pkg/redisx"
 	"tgwp/log/zlog"
 )
 
 func InitDataBase(config configs.Config) {
 	switch config.DB.Driver {
 	case "mysql":
-		databases.InitDataBases(mysqlx.NewMySql(), config)
+		//databases.InitDataBases(mysqlx.NewMySql(), config)
 		break
 	}
 	if config.App.Env != "pro" {
