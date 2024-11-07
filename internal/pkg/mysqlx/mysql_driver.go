@@ -11,7 +11,7 @@ type Mysql struct {
 }
 
 // InitDataBases 初始化
-func (m *Mysql) initDataBases(config configs.Config) (*gorm.DB, error) {
+func (m *Mysql) InitDataBases(config configs.Config) (*gorm.DB, error) {
 	dsn := m.getDsn(config)
 	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
@@ -22,7 +22,7 @@ func (m *Mysql) initDataBases(config configs.Config) (*gorm.DB, error) {
 	return db, nil
 }
 func (m *Mysql) getDsn(config configs.Config) string {
-	return config.DB.Dsn
+	return config.Mysql.Dsn
 }
 func NewMySql() *Mysql {
 	return &Mysql{}

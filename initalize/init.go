@@ -11,7 +11,7 @@ func Init() {
 	InitPath()
 	InitConfig()
 	InitLog(global.Config)
-	//InitDataBase(*global.Config)
+	InitDataBase(*global.Config)
 	InitRedis(*global.Config)
 }
 func InitPath() {
