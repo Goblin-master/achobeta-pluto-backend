@@ -14,6 +14,7 @@ func InitDataBase(config configs.Config) {
 	case "mysql":
 		database.InitDataBases(mysqlx.NewMySql(), config)
 	default:
+		
 		zlog.Fatalf("不支持的数据库驱动：%s", config.DB.Driver)
 	}
 	if config.App.Env != "pro" {
