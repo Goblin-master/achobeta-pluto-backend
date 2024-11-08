@@ -2,16 +2,18 @@ package initalize
 
 import (
 	"tgwp/configs"
+	databases "tgwp/db/database"
+	"tgwp/db/myRedis"
 	"tgwp/global"
-	myRedis "tgwp/internal/pkg/redisx"
 	"tgwp/log/zlog"
 )
 
 func InitDataBase(config configs.Config) {
 	switch config.DB.Driver {
 	case "mysql":
-		//databases.InitDataBases(mysqlx.NewMySql(), config)
-		break
+		databases.InitDataBases(databases.NewMySql(), config)
+	default:
+		zlog.Fatalf("不支持的数据库驱动：%s", config.DB.Driver)
 	}
 	if config.App.Env != "pro" {
 		err := global.DB.AutoMigrate()
