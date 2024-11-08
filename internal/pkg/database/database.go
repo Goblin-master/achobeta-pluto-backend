@@ -1,4 +1,4 @@
-package databases
+package database
 
 import (
 	"gorm.io/gorm"
@@ -8,13 +8,13 @@ import (
 )
 
 type DataBase interface {
-	getDsn(config configs.Config) string
-	initDataBases(config configs.Config) (*gorm.DB, error)
+	GetDsn(config configs.Config) string
+	InitDataBase(config configs.Config) (*gorm.DB, error)
 }
 
 func InitDataBases(base DataBase, config configs.Config) {
 	var err error
-	global.DB, err = base.initDataBases(config)
+	global.DB, err = base.InitDataBase(config)
 	if err != nil {
 		zlog.Fatalf("无法初始化数据库 %v", err)
 		return
