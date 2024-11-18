@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 	"tgwp/global"
 	"tgwp/internal/handler"
 	"tgwp/internal/repo"
@@ -45,16 +46,26 @@ func (l *CodeLogic) GenCode(ctx context.Context, req types.PhoneReq) (err error)
 //	@param AutoLogin
 //	@param resp
 //	@return err
-func (l *CodeLogic) GenLoginData(ctx context.Context, AutoLogin bool, resp *types.PhoneResp) (err error) {
+func (l *CodeLogic) GenLoginData(ctx context.Context, req types.PhoneReq, userIP string, userAgent string) (resp types.PhoneResp, err error) {
 	defer util.RecordTime(time.Now())()
+
+	if !handler.CompareCode(ctx, req.Code, req.Phone) {
+		return resp, errors.New("验证码错误")
+	}
+	// 加入必要的信息
+	resp.Ip = userIP
+	resp.UserAgent = userAgent
+
 	node, err := snowflake.NewNode(global.DEFAULT_NODE_ID)
 	if err != nil {
 		zlog.CtxErrorf(ctx, "NewNode err: %v", err)
 		return
 	}
 	resp.LoginId = snowflake.GenId(node)
+	// fixme 这是什么逆天写法？？？
 	user_id := snowflake.GenId(node)
-	if AutoLogin {
+	//
+	if req.AutoLogin {
 		issuer := snowflake.GenId(node)
 		resp.Atoken, err = util.GenToken(util.FullToken(global.AUTH_ENUMS_ATOKEN, issuer, user_id))
 		resp.Rtoken, err = util.GenToken(util.FullToken(global.AUTH_ENUMS_RTOKEN, issuer, user_id))
