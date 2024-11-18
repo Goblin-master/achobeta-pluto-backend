@@ -46,8 +46,9 @@ func LoginWithCode(c *gin.Context) {
 		return
 	}
 	zlog.CtxInfof(ctx, "LoginWithCode request: %v", req)
-
-	resp, err := logic.NewCodeLogic().GenLoginData(ctx, req, c.ClientIP(), c.Request.UserAgent())
+	req.UserIP = c.ClientIP()
+	req.UserAgent = c.Request.UserAgent()
+	resp, err := logic.NewCodeLogic().GenLoginData(ctx, req)
 	if err != nil {
 		response.NewResponse(c).Error(response.PARAM_NOT_VALID)
 		return
